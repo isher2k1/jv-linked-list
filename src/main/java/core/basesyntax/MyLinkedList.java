@@ -24,7 +24,9 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public void add(T value, int index) {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Invalid index!");
+            throw new IndexOutOfBoundsException(
+                    "Invalid index: " + index + ", size: " + size
+            );
         }
 
         if (index == size) {
@@ -45,10 +47,6 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
 
     @Override
     public void addAll(List<T> list) {
-        if (list == null) {
-            throw new NullPointerException("List is null!");
-        }
-
         for (T e : list) {
             add(e);
         }
@@ -62,7 +60,9 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
     @Override
     public T set(T value, int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Invalid index!");
+            throw new IndexOutOfBoundsException(
+                    "Invalid index: " + index + ", valid range is 0 to " + size
+            );
         }
 
         Node<T> nodeAtIndex = node(index);
@@ -102,21 +102,11 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
         return size == 0;
     }
 
-    private static class Node<E> {
-        private E item;
-        private Node<E> next;
-        private Node<E> prev;
-
-        Node(Node<E> prev, E element, Node<E> next) {
-            this.item = element;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-
     private Node<T> node(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Invalid index!");
+            throw new IndexOutOfBoundsException(
+                    "Invalid index: " + index + ", valid range is 0 to " + size
+            );
         }
 
         Node<T> node;
@@ -159,5 +149,17 @@ public class MyLinkedList<T> implements MyLinkedListInterface<T> {
 
         size--;
         return item;
+    }
+
+    private static class Node<E> {
+        private E item;
+        private Node<E> next;
+        private Node<E> prev;
+
+        Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 }
